@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { getStaffUser } from '@/lib/supabase/auth'
 import AdminPanel from './components/AdminPanel'
 import StaffPanel from './components/StaffPanel'
+import dynamic from 'next/dynamic'
 
 type Role = 'admin' | 'staff'
 
@@ -12,6 +13,8 @@ export default function DashboardPage() {
   const router = useRouter()
   const [role, setRole] = useState<Role | null>(null)
   const [loading, setLoading] = useState(true)
+  const AdminPanel = dynamic(() => import('./components/AdminPanel'), { ssr: false })
+const StaffPanel = dynamic(() => import('./components/StaffPanel'), { ssr: false })
 
   useEffect(() => {
     const loadUser = async () => {
